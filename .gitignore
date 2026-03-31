@@ -32,3 +32,6 @@ bin/
 ### Office temp files ###
 ~$*
 ~WRL*.tmp
+
+### Local docs source files ###
+docs/Projektova_dokumentace_SpaceInvaders.docx
