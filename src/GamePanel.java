@@ -4,6 +4,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.EnumMap;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -367,6 +368,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     void drawPlaying(Graphics g, boolean paused) {
         Player player = world.getPlayer();
+        ArrayList<Enemy> enemies = world.getEnemies();
+        ArrayList<Bullet> bullets = world.getBullets();
+        ArrayList<EnemyBullet> enemyBullets = world.getEnemyBullets();
+        ArrayList<PowerUp> powerUps = world.getPowerUps();
+        ArrayList<Bunker> bunkers = world.getBunkers();
+        Ufo ufo = world.getUfo();
+
         if (world.isPlayerVisible()) player.draw(g);
         if (world.getShieldTimer() > 0) {
             Rectangle r = player.getSpriteBounds();
@@ -378,12 +386,12 @@ public class GamePanel extends JPanel implements Runnable {
             g.setColor(new Color(80, 160, 255));
             g.drawOval(sx, sy, sw, sh);
         }
-        world.getEnemies().forEach(e -> e.draw(g));
-        world.getBullets().forEach(b -> b.draw(g));
-        world.getEnemyBullets().forEach(b -> b.draw(g));
-        world.getPowerUps().forEach(p -> p.draw(g));
-        world.getBunkers().forEach(b -> b.draw(g));
-        if (world.getUfo() != null) world.getUfo().draw(g);
+        enemies.forEach(e -> e.draw(g));
+        bullets.forEach(b -> b.draw(g));
+        enemyBullets.forEach(b -> b.draw(g));
+        powerUps.forEach(p -> p.draw(g));
+        bunkers.forEach(b -> b.draw(g));
+        if (ufo != null) ufo.draw(g);
 
         g.setColor(Color.WHITE);
         Font oldHud = g.getFont();

@@ -34,7 +34,7 @@ public class GameWorld {
     private boolean moveRightPressed = false;
     private boolean shootPressed = false;
 
-    public void startNewGame(ShipType shipType) {
+    public synchronized void startNewGame(ShipType shipType) {
         player = new Player(380, 520, shipType);
         enemies.clear();
         bullets.clear();
@@ -63,7 +63,7 @@ public class GameWorld {
         startLevel();
     }
 
-    public void update() {
+    public synchronized void update() {
         Bullet pending;
         while ((pending = pendingBullets.poll()) != null) {
             bullets.add(pending);
@@ -349,24 +349,24 @@ public class GameWorld {
         }
     }
 
-    public Player getPlayer() { return player; }
-    public ArrayList<Enemy> getEnemies() { return enemies; }
-    public ArrayList<Bullet> getBullets() { return bullets; }
-    public ArrayList<EnemyBullet> getEnemyBullets() { return enemyBullets; }
-    public ArrayList<PowerUp> getPowerUps() { return powerUps; }
-    public ArrayList<Bunker> getBunkers() { return bunkers; }
-    public Ufo getUfo() { return ufo; }
-    public int getScore() { return score; }
-    public int getCreditsEarned() { return creditsEarned; }
-    public int getLevel() { return level; }
-    public int getRapidFireTimer() { return rapidFireTimer; }
-    public int getShieldTimer() { return shieldTimer; }
-    public int getMessageTimer() { return messageTimer; }
-    public String getPowerUpMessage() { return powerUpMessage; }
-    public Color getPowerUpMessageColor() { return powerUpMessageColor; }
-    public boolean isPlayerVisible() { return playerVisible; }
+    public synchronized Player getPlayer() { return player; }
+    public synchronized ArrayList<Enemy> getEnemies() { return new ArrayList<>(enemies); }
+    public synchronized ArrayList<Bullet> getBullets() { return new ArrayList<>(bullets); }
+    public synchronized ArrayList<EnemyBullet> getEnemyBullets() { return new ArrayList<>(enemyBullets); }
+    public synchronized ArrayList<PowerUp> getPowerUps() { return new ArrayList<>(powerUps); }
+    public synchronized ArrayList<Bunker> getBunkers() { return new ArrayList<>(bunkers); }
+    public synchronized Ufo getUfo() { return ufo; }
+    public synchronized int getScore() { return score; }
+    public synchronized int getCreditsEarned() { return creditsEarned; }
+    public synchronized int getLevel() { return level; }
+    public synchronized int getRapidFireTimer() { return rapidFireTimer; }
+    public synchronized int getShieldTimer() { return shieldTimer; }
+    public synchronized int getMessageTimer() { return messageTimer; }
+    public synchronized String getPowerUpMessage() { return powerUpMessage; }
+    public synchronized Color getPowerUpMessageColor() { return powerUpMessageColor; }
+    public synchronized boolean isPlayerVisible() { return playerVisible; }
 
-    public void setMoveLeftPressed(boolean pressed) { moveLeftPressed = pressed; }
-    public void setMoveRightPressed(boolean pressed) { moveRightPressed = pressed; }
-    public void setShootPressed(boolean pressed) { shootPressed = pressed; }
+    public synchronized void setMoveLeftPressed(boolean pressed) { moveLeftPressed = pressed; }
+    public synchronized void setMoveRightPressed(boolean pressed) { moveRightPressed = pressed; }
+    public synchronized void setShootPressed(boolean pressed) { shootPressed = pressed; }
 }
